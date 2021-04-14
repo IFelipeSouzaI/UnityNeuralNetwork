@@ -39,7 +39,6 @@ public class FMatrix
         return a;
     }
 
-
     public static FMatrix newByMinus(FMatrix M1, FMatrix M2){
         FMatrix m = new FMatrix(M1.rows, M1.columns);
         for(int i = 0; i < m.rows; i++){
@@ -85,24 +84,30 @@ public class FMatrix
         return m;
     }
     
-    private float Sigmoid(float value, bool derivate = false){
-        if(derivate == false){
-            return (1f/(1f + Mathf.Exp(-value)));
+    public static FMatrix newGradientM(FMatrix M){
+        FMatrix gradient = new FMatrix(M.rows, M.columns);
+        for(int i = 0; i < gradient.rows; i++){
+            for(int j = 0; j < gradient.columns; j++){
+                float aux = M.data[i,j];
+                gradient.data[i,j] = (aux*(1-aux));
+            }
         }
-        else{
-            return (value*(1 - value));
-        }
+        return gradient;
     }
 
-    public void SigmoidMap(bool derivate = false){
+    private float Sigmoid(float value){
+        return (1f/(1f + Mathf.Exp(-value)));
+    }
+
+    public void SigmoidMap(){
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 float aux = data[i,j];
-                data[i,j] = Sigmoid(aux, derivate);
+                data[i,j] = Sigmoid(aux);
             }
         }
     }
-/*
+/*  
     public static newBySigmoidMap(bool derivate = false, FMatrix M){
         FMatrix m = new FMatrix(M.rows, M.columns);
         for(int i = 0; i < rows; i++){

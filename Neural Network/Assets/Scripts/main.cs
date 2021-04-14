@@ -16,7 +16,8 @@ public class main : MonoBehaviour
 
     void Start()
     {
-        NeuralNetwork nn = new NeuralNetwork(2,2,1);
+        int hidden_layers = 2;
+        NeuralNetwork nn = new NeuralNetwork(2,5,1,hidden_layers);
 
         for(int i = 0; i < 50000; i++){
             int r = Random.Range(0,10)%4;
